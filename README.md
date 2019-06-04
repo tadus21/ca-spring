@@ -1,2 +1,2 @@
-# ca-spring
-Code academy Spring kursu medziaga
+# Code Academy Spring kursas
+**Code Academy** Spring kurso medžiaga
