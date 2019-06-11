@@ -1,6 +1,9 @@
 package lt.codeacademy.cvbuilder.contact;
 
+import lt.codeacademy.cvbuilder.person.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,5 +37,11 @@ public class ContactController {
     @DeleteMapping(path = "/delete/{id}")
     public void deleteContact(@PathVariable("id") int id) {
         service.deleteContact(id);
+    }
+
+    @ExceptionHandler({EmptyResultDataAccessException.class, NotFoundException.class})
+    @ResponseStatus(code = HttpStatus.NOT_FOUND)
+    public void handleNotFoundException() {
+
     }
 }
