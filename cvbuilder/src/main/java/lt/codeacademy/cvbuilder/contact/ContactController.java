@@ -17,18 +17,18 @@ public class ContactController {
     }
 
     @GetMapping
-    public List<Contact> getContacts() {
-        return service.getContacts();
+    public List<ContactView> getContacts() {
+        return service.getContactViews();
     }
 
     @PostMapping(path = "/add")
-    public void addContact(@RequestBody Contact contact) {
-        service.addContact(contact);
+    public void addContact(@RequestBody ContactView contactView) {
+        service.addContact(contactView);
     }
 
     @PutMapping(path = "/update/{id}")
-    public void updateContact(@PathVariable("id") int id, @RequestBody Contact contact) {
-        service.updateContact(id, contact);
+    public void updateContact(@PathVariable("id") int id, @RequestBody ContactView contactView) {
+        service.updateContact(id, contactView);
     }
 
     @DeleteMapping(path = "/delete/{id}")

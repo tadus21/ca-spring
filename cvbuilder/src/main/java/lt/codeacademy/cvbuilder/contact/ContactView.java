@@ -1,23 +1,20 @@
 package lt.codeacademy.cvbuilder.contact;
 
-import javax.persistence.*;
 import java.util.Objects;
 
-@Entity
-public class Contact {
+public class ContactView {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String value;
     private ContactType type;
 
-    public Contact(String value, ContactType type) {
+    public ContactView(int id, String value, ContactType type) {
+        this.id = id;
         this.value = value;
         this.type = type;
     }
 
-    public Contact() {
+    public ContactView() {
     }
 
     public int getId() {
@@ -45,24 +42,24 @@ public class Contact {
     }
 
     @Override
+    public String toString() {
+        return "ContactView{" +
+                "id=" + id +
+                ", value='" + value + '\'' +
+                ", type=" + type +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Contact contact = (Contact) o;
-        return id == contact.id;
+        ContactView contactView = (ContactView) o;
+        return id == contactView.id;
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "id=" + id +
-                ", value='" + value + '\'' +
-                ", type=" + type +
-                '}';
     }
 }

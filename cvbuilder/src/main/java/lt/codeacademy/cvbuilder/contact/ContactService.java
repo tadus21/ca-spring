@@ -1,42 +1,58 @@
 package lt.codeacademy.cvbuilder.contact;
 
 import lt.codeacademy.cvbuilder.person.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ContactService {
 
-    private final List<Contact> contacts = new ArrayList<>();
+    private final ContactRepository repository;
 
-    List<Contact> getContacts() {
-        return new ArrayList<>(contacts);
+    @Autowired
+    public ContactService(ContactRepository repository) {
+        this.repository = repository;
     }
 
-    void updateContact(int id, Contact updatedContact) {
+    List<ContactView> getContactViews() {
+        return repository.findAll()
+                .stream()
+                .map(this::mapToView)
+                .collect(Collectors.toList());
+    }
+
+    void updateContact(int id, ContactView updatedContactView) {
         Contact contact = find(id);
-        if (updatedContact.getValue() != null) {
-            contact.setValue(updatedContact.getValue());
+        if (updatedContactView.getValue() != null) {
+            contact.setValue(updatedContactView.getValue());
         }
-        if (updatedContact.getType() != null) {
-            contact.setType(updatedContact.getType());
+        if (updatedContactView.getType() != null) {
+            contact.setType(updatedContactView.getType());
         }
+        repository.save(contact);
     }
 
-    private Contact find(int id) {
-        return contacts.stream()
-                .filter(c -> c.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new NotFoundException("Contact not found"));
-    }
-
-    void addContact(Contact contact) {
-        contacts.add(contact);
+    void addContact(ContactView contactView) {
+        repository.save(mapFromView(contactView));
     }
 
     void deleteContact(int id) {
-        contacts.removeIf(c -> c.getId() == id);
+        repository.deleteById(id);
+    }
+
+    private Contact find(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new NotFoundException("ContactView not found"));
+    }
+
+    private ContactView mapToView(Contact contact) {
+        return new ContactView(contact.getId(), contact.getValue(), contact.getType());
+    }
+
+    private Contact mapFromView(ContactView contactView) {
+        return new Contact(contactView.getValue(), contactView.getType());
     }
 }
