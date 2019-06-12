@@ -73,6 +73,11 @@ public class Employer {
     }
 
     public void addActivity(Activity activity) {
+        if (activity.getStartDate().isBefore(this.startDate) ||
+                (this.endDate != null && activity.getEndDate().isAfter(this.endDate))
+        ) {
+            throw new IllegalArgumentException("Wrong date interval");
+        }
         activities.add(activity);
         activity.setEmployer(this);
     }
