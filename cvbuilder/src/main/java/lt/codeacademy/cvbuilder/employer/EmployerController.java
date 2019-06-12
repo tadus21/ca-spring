@@ -1,10 +1,9 @@
 package lt.codeacademy.cvbuilder.employer;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,6 +23,18 @@ public class EmployerController {
         return repository.findAll().stream()
                 .map(this::mapFromEmployer)
                 .collect(Collectors.toList());
+    }
+
+    @PostMapping(path = "/new-employer")
+    public void addEmployer(@RequestBody EmployerView employer) {
+        repository.save(mapToEmployer(employer));
+    }
+
+    private Employer mapToEmployer(EmployerView employerView) {
+        return new Employer(employerView.getName(),
+                employerView.getStartDate(),
+                employerView.getEndDate(),
+                Collections.emptyList());
     }
 
     private EmployerView mapFromEmployer(Employer employer) {
