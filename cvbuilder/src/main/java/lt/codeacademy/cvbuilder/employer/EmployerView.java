@@ -2,6 +2,8 @@ package lt.codeacademy.cvbuilder.employer;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,9 +13,11 @@ public class EmployerView {
 
     private long id;
 
+    @NotEmpty(message = "Name cannot be empty")
     private String name;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Start date is mandatory")
     private LocalDate startDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")

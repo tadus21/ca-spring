@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +32,7 @@ public class EmployerController {
     }
 
     @PostMapping(path = "/new-employer")
-    public void addEmployer(@RequestBody EmployerView employer) {
+    public void addEmployer(@RequestBody @Valid EmployerView employer) {
         employerRepository.save(mapToEmployer(employer));
     }
 
