@@ -22,12 +22,11 @@ public class Activity {
     @ManyToOne
     private Employer employer;
 
-    public Activity(String description, String position, LocalDate startDate, LocalDate endDate, Employer employer) {
+    public Activity(String description, String position, LocalDate startDate, LocalDate endDate) {
         this.description = description;
         this.position = position;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.employer = employer;
     }
 
     public Activity() {

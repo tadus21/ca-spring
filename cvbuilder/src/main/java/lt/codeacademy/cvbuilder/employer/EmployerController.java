@@ -30,6 +30,14 @@ public class EmployerController {
         repository.save(mapToEmployer(employer));
     }
 
+    @PostMapping("/new-activity/{employerId}")
+    public void addActivity(@PathVariable("employerId") long employerId,
+                            @RequestBody ActivityView activityView) {
+        Activity activity = mapToActivity(activityView);
+        
+
+    }
+
     private Employer mapToEmployer(EmployerView employerView) {
         return new Employer(employerView.getName(),
                 employerView.getStartDate(),
@@ -47,6 +55,13 @@ public class EmployerController {
                 employer.getStartDate(),
                 employer.getEndDate(),
                 activityViews);
+    }
+
+    private Activity mapToActivity(ActivityView activityView) {
+        return new Activity(activityView.getDescription(),
+                activityView.getPosition(),
+                activityView.getStartDate(),
+                activityView.getEndDate());
     }
 
     private ActivityView mapFromActivity(Activity activity) {
