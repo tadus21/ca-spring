@@ -1,5 +1,7 @@
 package lt.codeacademy.cvbuilder.employer;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,8 +13,10 @@ public class ActivityView {
 
     private String position;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate startDate;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
     public ActivityView(long id, String description, String position, LocalDate startDate, LocalDate endDate) {

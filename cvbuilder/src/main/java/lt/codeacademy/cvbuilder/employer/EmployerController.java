@@ -1,41 +1,51 @@
 package lt.codeacademy.cvbuilder.employer;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/employer")
 public class EmployerController {
 
-    private final EmployerRepository repository;
+    private final EmployerRepository employerRepository;
+    private final ActivityRepository activityRepository;
+
 
     @Autowired
-    public EmployerController(EmployerRepository repository) {
-        this.repository = repository;
+    public EmployerController(EmployerRepository employerRepository, ActivityRepository activityRepository) {
+        this.employerRepository = employerRepository;
+        this.activityRepository = activityRepository;
     }
 
     @GetMapping()
     public List<EmployerView> getEmployers() {
-        return repository.findAll().stream()
+        return employerRepository.findAll().stream()
                 .map(this::mapFromEmployer)
                 .collect(Collectors.toList());
     }
 
     @PostMapping(path = "/new-employer")
     public void addEmployer(@RequestBody EmployerView employer) {
-        repository.save(mapToEmployer(employer));
+        employerRepository.save(mapToEmployer(employer));
     }
 
     @PostMapping("/new-activity/{employerId}")
+    @Transactional
     public void addActivity(@PathVariable("employerId") long employerId,
                             @RequestBody ActivityView activityView) {
-        Activity activity = mapToActivity(activityView);
-        
 
+        Activity activity = mapToActivity(activityView);
+        Employer employer = employerRepository.findById(employerId)
+                .orElseThrow(() -> new IllegalArgumentException("Wrong employer id"));
+
+        employer.addActivity(activity);
+        employerRepository.save(employer);
     }
 
     private Employer mapToEmployer(EmployerView employerView) {

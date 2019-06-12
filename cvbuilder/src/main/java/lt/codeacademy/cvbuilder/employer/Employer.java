@@ -74,6 +74,7 @@ public class Employer {
 
     public void addActivity(Activity activity) {
         activities.add(activity);
+        activity.setEmployer(this);
     }
 
     public void removeActivity(Activity activity) {
