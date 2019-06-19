@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@ValidEmployer
 public class EmployerView {
 
     private long id;

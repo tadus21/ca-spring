@@ -39,7 +39,7 @@ public class EmployerController {
     @PostMapping("/new-activity/{employerId}")
     @Transactional
     public void addActivity(@PathVariable("employerId") long employerId,
-                            @RequestBody ActivityView activityView) {
+                            @RequestBody @Valid ActivityView activityView) {
 
         Activity activity = mapToActivity(activityView);
         Employer employer = employerRepository.findById(employerId)

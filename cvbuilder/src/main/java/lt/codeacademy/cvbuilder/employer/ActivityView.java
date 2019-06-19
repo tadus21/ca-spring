@@ -28,7 +28,6 @@ public class ActivityView {
     }
 
 
-
     public long getId() {
         return id;
     }
