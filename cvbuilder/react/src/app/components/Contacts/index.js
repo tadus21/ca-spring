@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import './index.css';
 import {useFetch} from "../../utils/fetch-hook";
-import {API_DOMAIN, API_ENDPOINTS} from "../../utils/constants";
+import {API_ENDPOINTS} from "../../utils/constants";
 import {FaEnvelope, FaGithubAlt, FaLinkedinIn, FaMapMarker, FaPhone} from 'react-icons/fa';
+import {API_DOMAIN} from "../../utils/constants";
 
 const icons = {FaEnvelope, FaPhone, FaMapMarker, FaLinkedinIn, FaGithubAlt};
 
@@ -22,7 +23,7 @@ function Contacts(props) {
   const {loading, data, setData} = useFetch(API_ENDPOINTS.contacts);
 
   const addContact = contact => {
-    setData(...data, contact)
+    setData([...data, contact])
   };
 
   return (
@@ -32,9 +33,8 @@ function Contacts(props) {
         <div>Loading...</div>
         :
         data.map(Item)
-
       }
-      <AddContactForm addContact = {addContact}/>
+      <AddContactForm addContact={addContact}/>
     </section>
   );
 }
@@ -43,11 +43,36 @@ function AddContactForm(props) {
   const initialFormState = {value: '', type: 'FaEnvelope', url: ''};
   const [contact, setContact] = useState(initialFormState);
 
+  const handleInputChange = event => {
+    const {name, value} = event.target;
+
+    setContact({...contact, [name]: value})
+  };
+
+  const {loading, data} = useFetch(API_ENDPOINTS.contactsTypes);
+
+  // const createContact = async event => {
+  //   event.preventDefault();
+  //   if (!contact.value || !contact.type || !contact.url) return;
+  //
+  //   const response = await fetch(`${API_DOMAIN}${API_ENDPOINTS.addContact}`,
+  //     {
+  //       body: JSON.stringify(contact), method: 'POST', headers: {
+  //         'Accept': 'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     }).then(resp => resp.json());
+  //
+  //   props.addContact(response);
+  //   setContact(initialFormState)
+  // };
+
   return (
     <form
       onSubmit={event => {
         event.preventDefault();
         if (!contact.value || !contact.type || !contact.url) return;
+
         props.addContact(contact);
         setContact(initialFormState)
       }}
