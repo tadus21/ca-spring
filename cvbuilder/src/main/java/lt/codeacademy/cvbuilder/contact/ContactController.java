@@ -6,6 +6,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,14 @@ public class ContactController {
         return service.getContactViews();
     }
 
+    @GetMapping(path = "/types")
+    public List<ContactType> getContactTypes() {
+        return Arrays.asList(ContactType.values());
+    }
+
     @PostMapping(path = "/add")
-    public void addContact(@RequestBody ContactView contactView) {
-        service.addContact(contactView);
+    public ContactView addContact(@RequestBody ContactView contactView) {
+        return service.addContact(contactView);
     }
 
     @PutMapping(path = "/update/{id}")

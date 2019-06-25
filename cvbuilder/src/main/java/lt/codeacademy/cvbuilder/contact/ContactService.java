@@ -35,8 +35,8 @@ public class ContactService {
         repository.save(contact);
     }
 
-    void addContact(ContactView contactView) {
-        repository.save(mapFromView(contactView));
+    ContactView addContact(ContactView contactView) {
+        return mapToView(repository.save(mapFromView(contactView)));
     }
 
     void deleteContact(int id) {
@@ -49,10 +49,10 @@ public class ContactService {
     }
 
     private ContactView mapToView(Contact contact) {
-        return new ContactView(contact.getId(), contact.getValue(), contact.getType());
+        return new ContactView(contact.getId(), contact.getValue(), contact.getType(), contact.getUrl());
     }
 
     private Contact mapFromView(ContactView contactView) {
-        return new Contact(contactView.getValue(), contactView.getType());
+        return new Contact(contactView.getValue(), contactView.getType(), contactView.getUrl());
     }
 }

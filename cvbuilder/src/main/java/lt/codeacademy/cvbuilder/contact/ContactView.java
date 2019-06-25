@@ -7,11 +7,21 @@ public class ContactView {
     private int id;
     private String value;
     private ContactType type;
+    private String url;
 
-    public ContactView(int id, String value, ContactType type) {
+    public ContactView(int id, String value, ContactType type, String url) {
         this.id = id;
         this.value = value;
         this.type = type;
+        this.url = url;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public ContactView() {
@@ -41,25 +51,27 @@ public class ContactView {
         this.type = type;
     }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactView that = (ContactView) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
     @Override
     public String toString() {
         return "ContactView{" +
                 "id=" + id +
                 ", value='" + value + '\'' +
                 ", type=" + type +
+                ", url='" + url + '\'' +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ContactView contactView = (ContactView) o;
-        return id == contactView.id;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService {
 
-    private Person person = null;
+    private Person person = new Person("Tadas", "Obolevicius", "About me");
 
     public Person getPerson() {
         if (person == null) {

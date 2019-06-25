@@ -11,13 +11,19 @@ public class Contact {
     private int id;
     private String value;
     private ContactType type;
+    private String url;
 
-    public Contact(String value, ContactType type) {
+    public Contact(String value, ContactType type, String url) {
         this.value = value;
         this.type = type;
+        this.url = url;
     }
 
     public Contact() {
+    }
+
+    public String getUrl() {
+        return url;
     }
 
     public int getId() {
@@ -63,6 +69,7 @@ public class Contact {
                 "id=" + id +
                 ", value='" + value + '\'' +
                 ", type=" + type +
+                ", url='" + url + '\'' +
                 '}';
     }
 }

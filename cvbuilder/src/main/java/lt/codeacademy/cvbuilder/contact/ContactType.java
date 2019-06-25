@@ -1,8 +1,5 @@
 package lt.codeacademy.cvbuilder.contact;
 
-public enum  ContactType {
-    PHONE_NUMBER,
-    EMAIL,
-    LINKED_IN,
-    FACEBOOK
+public enum ContactType {
+    FaGithubAlt, FaEnvelope, FaPhone, FaMapMarker, FaLinkedinIn
 }
