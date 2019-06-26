@@ -11,6 +11,7 @@ function Item(data) {
   const Icon = icons[data.type];
 
   const clicked = event => {
+    event.preventDefault();
     const {value} = event.target;
     console.log(value)
   };
