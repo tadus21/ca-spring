@@ -30,6 +30,13 @@ public class EmployerController {
                 .collect(Collectors.toList());
     }
 
+    @GetMapping(path = "/activities")
+    public List<ActivityView> getActivities() {
+        return activityRepository.findAll().stream()
+                .map(this::mapFromActivity)
+                .collect(Collectors.toList());
+    }
+
     @PostMapping(path = "/new-employer")
     public void addEmployer(@RequestBody @Valid EmployerView employer) {
         employerRepository.save(mapToEmployer(employer));
