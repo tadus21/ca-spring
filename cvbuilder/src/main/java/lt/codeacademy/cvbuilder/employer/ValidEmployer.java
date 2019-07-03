@@ -27,7 +27,7 @@ public @interface ValidEmployer {
         @Override
         public boolean isValid(EmployerView employerView,
                                ConstraintValidatorContext constraintValidatorContext) {
-            return employerView.getStartDate().isBefore(employerView.getEndDate());
+            return employerView.getEndDate() == null || employerView.getStartDate().isBefore(employerView.getEndDate());
         }
     }
 }

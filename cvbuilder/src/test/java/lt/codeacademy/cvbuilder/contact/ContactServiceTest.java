@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 @DataJpaTest
 public class ContactServiceTest {
 
-
     @Autowired
     private ContactRepository contactRepository;
     @Autowired
@@ -24,7 +23,10 @@ public class ContactServiceTest {
 
     @Test
     public void testContactService_updateExistingContact_willUpdateProvidedField() {
-        Contact savedContact = contactRepository.save(new Contact("test-value", ContactType.FaEnvelope, "test-url"));
+        Contact initialContact = new Contact("test-value",
+                ContactType.FaEnvelope,
+                "test-url");
+        Contact savedContact = contactRepository.save(initialContact);
         ContactView updatedContact = new ContactView(0,
                 "updated-value", null, null);
 
@@ -35,7 +37,6 @@ public class ContactServiceTest {
         assertEquals("updated-value", actualResult.getValue());
         assertEquals(ContactType.FaEnvelope, actualResult.getType());
         assertEquals("test-url", actualResult.getUrl());
-
     }
 
 }

@@ -38,8 +38,8 @@ public class EmployerController {
     }
 
     @PostMapping(path = "/new-employer")
-    public void addEmployer(@RequestBody @Valid EmployerView employer) {
-        employerRepository.save(mapToEmployer(employer));
+    public EmployerView addEmployer(@RequestBody @Valid EmployerView employer) {
+        return mapFromEmployer(employerRepository.save(mapToEmployer(employer)));
     }
 
     @PostMapping("/new-activity/{employerId}")

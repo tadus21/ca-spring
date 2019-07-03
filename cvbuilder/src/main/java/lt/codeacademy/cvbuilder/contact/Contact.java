@@ -19,6 +19,8 @@ public class Contact {
         this.url = url;
     }
 
+
+
     public Contact() {
     }
 
